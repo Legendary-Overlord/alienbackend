@@ -144,7 +144,7 @@
                                 <tr>
                                     <th><div class="input-group">
                                         <button class="btn btn-outline-primary nav-button" type="button" data-toggle="modal"
-                                            data-target="#uploadModal">
+                                            data-target="#upload">
                                             Upload
                                             <i class="fas fa-upload"></i>
                                         </button>
@@ -166,6 +166,40 @@
                             </tbody>
                         </table>
                     </form>
+                    <div class="modal fade" id="upload" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Uploading Saved Problem</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form id="upload-form">
+                                <div class="modal-body">
+                                    <p>
+                                        Here you have to select a previously saved problem in .json format. Make
+                                        sure the file has not
+                                        been modified or there are going to be problems in the upload process.
+                                    </p>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlFile1">Choose File</label>
+                                        <input type="file" class="form-control-file" id="fileUpload" accept=".json"
+                                            required>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">Close</button>
+                                    <button type="input" class="btn btn-primary" onclick="importJson(fileUpload)">Upload</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -1005,6 +1039,33 @@
                 document.body.removeChild(a);
             }
         }
+        function importJson(elemId) {
+                var elem = document.getElementById(elemId);
+                if (elem && document.createEvent) {
+                    var evt = document.createEvent("MouseEvents");
+                    evt.initEvent("click", true, false);
+                    elem.dispatchEvent(evt);
+                }
+                var jsonElem = decodeURIComponent(JSON.parse(elem));
+                updateJsonToWeb(jsonElem);
+
+            }
+        function updateJsonToWeb(elem){
+            document.getElementById("#itemName").textContent = elem.name;
+            $("#itemName").val() = elem.name;
+            $("#levelCode").textContent = elem.levelCode;
+            $("#initialInventory").textContent = elem.initialInventory;
+            $("#leadTime").textContent = elem.leadTime;
+            $("#maintenanceCost").textContent = elem.maintenanceCost;
+            $("#orderingCost").textContent = elem.orderingCost;
+            $('#securityStock').textContent = elem.securityStock;
+            $('#costArticle').textContent = elem.costArticle;
+            $('#periodicity').textContent = elem.periodicity;
+            $('#TPeriodOFSupply').textContent = elem.TPeriodOFSupply;
+            scheduledReceptions = elem.scheduledReceptions;
+            grossRequeriment = elem.grossRequeriment;
+        } 
+        
     </script>
 </body>
 
